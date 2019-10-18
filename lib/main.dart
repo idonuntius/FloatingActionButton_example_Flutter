@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:floating_action_button_example/example1/example1_page.dart';
+import 'package:floating_action_button_example/example2/example2_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
 class MainPage extends StatelessWidget {
   final _dataList = [
     'Example 1',
+    'Example 2',
   ];
 
   @override
@@ -29,14 +31,14 @@ class MainPage extends StatelessWidget {
       ),
       body: ListView.builder(
         itemBuilder:  (BuildContext context, int index) {
-          return _listItemView(context, _dataList[index]);
+          return _listItemView(context, index);
         },
         itemCount: _dataList.length,
       ),
     );
   }
 
-  Widget _listItemView(BuildContext context, String title) {
+  Widget _listItemView(BuildContext context, int index) {
     return Card(
       margin: EdgeInsets.all(0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
@@ -50,10 +52,17 @@ class MainPage extends StatelessWidget {
           ),
         ),
         child: ListTile(
-          title: Text(title),
+          title: Text(_dataList[index]),
           trailing: Icon(Icons.arrow_forward_ios),
           onTap: () {
-            _goExample1Page(context);
+            switch (index) {
+              case 0:
+                _goExample1Page(context);
+                break;
+              case 1:
+                _goExample2Page(context);
+                break;
+            }
           },
         ),
       ),
@@ -64,6 +73,14 @@ class MainPage extends StatelessWidget {
     Navigator.of(context).push(
         MaterialPageRoute(builder: (context) {
           return Example1Page();
+        })
+    );
+  }
+
+  _goExample2Page(BuildContext context) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) {
+          return Example2Page();
         })
     );
   }
